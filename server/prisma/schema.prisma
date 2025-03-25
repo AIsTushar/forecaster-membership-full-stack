@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Enum for membership tiers
+enum MembershipTier {
+  FREE
+  BASIC
+  PRO
+  PREMIUM
+}
+
+enum MembershipStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+// Enum for payment status
+enum PaymentStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
+  REFUNDED
+}
+
+
+// User model with custom authentication
+model User {
+  id                   String            @id @default(auto()) @map("_id") @db.ObjectId
+  email                String            @unique
+  password             String
+  name            String?
+  profileImage         String?
+  membership           Membership?
+  membershipId         String?
+  phoneNumber          String?
+  address              String?
+  
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  
+  transactions         Transaction[]
+  paymentMethods       PaymentMethod[]
+  isAdmin              Boolean           @default(false)
+  
+}
+
+
+
+model Membership {
+  id                   String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String            @unique @db.ObjectId
+  user                 User              @relation(fields: [userId], references: [id])
+  
+  tier                 MembershipTier    @default(FREE)
+  startDate            DateTime          @default(now())
+  renewalDate          DateTime
+  status               MembershipStatus  @default(ACTIVE)
+  
+  
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  cancelAtPeriodEnd    Boolean           @default(false)
+}
+
+
+model PaymentMethod {
+  id                   String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String            @db.ObjectId
+  user                 User              @relation(fields: [userId], references: [id])
+  
+  type                 String            
+  cardLast4            String?
+  cardBrand            String?
+  
+  isDefault            Boolean           @default(false)
+  expiryMonth          Int?
+  expiryYear           Int?
+}
+
+
+model Transaction {
+  id                   String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String            @db.ObjectId
+  user                 User              @relation(fields: [userId], references: [id])
+  
+  amount               Float
+  currency             String
+  description          String?
+  
+  paymentGateway       String           
+  gatewayTransactionId String?
+  
+  status               PaymentStatus     @default(PENDING)
+  
+  createdAt            DateTime          @default(now())
+}
