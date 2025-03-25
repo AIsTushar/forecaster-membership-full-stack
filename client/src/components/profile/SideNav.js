@@ -8,14 +8,19 @@ import {
   Home,
   LogOutIcon,
   Settings,
+  UserCheck,
 } from "lucide-react";
 import clsx from "clsx";
 import { useAuthStore } from "@/store/authStore";
 
 function SideNav() {
   const pathname = usePathname();
-  const { logout, isLoading } = useAuthStore();
+  const { logout, isLoading, user } = useAuthStore();
   const router = useRouter();
+
+  const admin = user?.isAdmin;
+
+  console.log(admin);
 
   const handleLogout = async () => {
     if (isLoading) return;
@@ -44,6 +49,22 @@ function SideNav() {
             {label}
           </Link>
         ))}
+
+        {admin && (
+          <Link
+            href="/profile/adminDashboard" // Replace with your admin route
+            className={clsx(
+              "flex items-center text-white rounded-lg p-2 hover:text-black hover:bg-gray-100",
+              {
+                "bg-gray-200 !text-black":
+                  pathname === "/profile/adminDashboard",
+              }
+            )}
+          >
+            <UserCheck className="mr-3 h-5 w-5" />
+            Admin Dashboard
+          </Link>
+        )}
 
         {/* Logout Button */}
         <button
