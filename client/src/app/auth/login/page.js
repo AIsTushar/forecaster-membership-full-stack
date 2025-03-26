@@ -23,7 +23,7 @@ function Page() {
 
     try {
       await login(email, password);
-      router.push("/"); // Redirect to home after login
+      router.push("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed!");
     } finally {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_URL = "http://localhost:5000/api/auth/";
+const API_URL = "http://localhost:5000/api/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -97,11 +97,11 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  changePassword: async (oldPassword, newPassword) => {
+  changePassword: async (currentPassword, newPassword) => {
     set({ isLoading: true, error: null });
     try {
       await axios.put(`${API_URL}/changePassword`, {
-        oldPassword,
+        currentPassword,
         newPassword,
       });
       set({ isLoading: false });

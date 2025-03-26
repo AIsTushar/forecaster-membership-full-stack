@@ -4,29 +4,26 @@ import Input from "@/components/Input";
 import { useAuthStore } from "@/store/authStore";
 import { Loader, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 
 function Page() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const { signup } = useAuthStore();
+  const { signup, error, isLoading } = useAuthStore();
+  const router = useRouter();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
 
     try {
       await signup(name, email, password);
       router.push("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed!");
-    } finally {
-      setLoading(false);
+      console.log(err);
     }
   };
 
@@ -66,9 +63,9 @@ function Page() {
             <button
               className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 transition duration-200"
               type="submit"
-              disabled={loading}
+              disabled={isLoading}
             >
-              {loading ? (
+              {isLoading ? (
                 <Loader className="w-6 h-6 animate-spin mx-auto" />
               ) : (
                 "Sign Up"

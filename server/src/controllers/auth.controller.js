@@ -8,12 +8,10 @@ export const signup = async (req, res) => {
   const { email, password, name } = req.body;
 
   try {
-    // Check all fields are filled
     if (!email || !password || !name) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check if user already exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return res
@@ -21,21 +19,22 @@ export const signup = async (req, res) => {
         .json({ success: false, message: "User already exists" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = await prisma.user.create({
       data: { name, email, password: hashedPassword },
     });
 
     generateTokenAndSetCookie(res, user.id);
 
-    res
-      .status(201)
-      .json({ success: true, message: "User created successfully", user });
+    res.status(201).json({
+      success: true,
+      message: "User created successfully",
+      user: { id: user.id, name: user.name, email: user.email },
+    });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    console.error("Signup Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 

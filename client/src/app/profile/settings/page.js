@@ -35,7 +35,7 @@ function Page() {
     try {
       changePassword(password, confirmPassword);
       logout();
-      router.push("/");
+      router.push("/auth/login");
       console.log(password, confirmPassword);
     } catch (error) {
       console.log(error);
