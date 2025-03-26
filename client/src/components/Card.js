@@ -14,7 +14,7 @@ function Card({ title, price, featureOne, featureTwo, btnText, priceId }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/checkout",
+        "https://forecaster-membership-full-stack.vercel.app/api/checkout",
         { priceId, title },
         {
           headers: { "Content-Type": "application/json" },

@@ -12,7 +12,24 @@ const app = express();
 app.use("/api/webhook", webhookRoutes);
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://forecaster-membership-full-stack-e9bn.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow credentials (cookies, headers, etc.)
+  })
+);
 
 app.use(cookieParser());
 dotenv.config();
