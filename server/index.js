@@ -17,7 +17,9 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 dotenv.config();
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => {
+  res.send("Hello from Vercel!");
+});
 
 // Authentication APIs
 app.use("/api/auth", authRoutes);
