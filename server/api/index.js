@@ -3,9 +3,9 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import authRoutes from "./src/routes/auth.route.js";
-import checkoutRoutes from "./src/routes/checkout.route.js";
-import webhookRoutes from "./src/routes/webhook.route.js";
+import authRoutes from "../src/routes/auth.route.js";
+import checkoutRoutes from "../src/routes/checkout.route.js";
+import webhookRoutes from "../src/routes/webhook.route.js";
 
 const app = express();
 // Webhook API
