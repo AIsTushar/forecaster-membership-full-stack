@@ -15,20 +15,9 @@ app.use("/api/webhook", webhookRoutes);
 
 app.use(express.json());
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://forecaster-membership-full-stack-e9bn.vercel.app",
-];
-
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://forecaster-membership-full-stack-e9bn.vercel.app",
     credentials: true,
   })
 );
