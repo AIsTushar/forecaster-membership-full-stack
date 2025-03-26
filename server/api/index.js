@@ -17,7 +17,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://forecaster-membership-full-stack-e9bn.vercel.app",
+    origin: [
+      "https://forecaster-membership-full-stack.vercel.app",
+      "https://forecaster-membership-full-stack-e9bn.vercel.app",
+    ],
     credentials: true,
   })
 );
