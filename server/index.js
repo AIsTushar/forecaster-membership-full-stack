@@ -27,6 +27,8 @@ app.use("/api/auth", authRoutes);
 // Stripe APIs
 app.use("/api/checkout", checkoutRoutes);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT, () => {
+//   console.log(`Example app listening on port ${process.env.PORT}`);
+// });
+
+export default app;
