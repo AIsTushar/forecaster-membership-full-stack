@@ -17,15 +17,15 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 dotenv.config();
 
-app.get("/", (req, res) => {
-  res.send("Hello from Vercel!");
-});
-
 // Authentication APIs
 app.use("/api/auth", authRoutes);
 
 // Stripe APIs
 app.use("/api/checkout", checkoutRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Hello from Vercel!");
+});
 
 // app.listen(process.env.PORT, () => {
 //   console.log(`Example app listening on port ${process.env.PORT}`);
