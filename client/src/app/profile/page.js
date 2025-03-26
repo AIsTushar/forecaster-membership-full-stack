@@ -17,6 +17,7 @@ function Page() {
         }
       );
       const data = response.data.user;
+      console.log(data);
       setUser(data);
     };
     fetchUser();
