@@ -3,7 +3,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "https://forecaster-membership-full-stack.vercel.app/api/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
