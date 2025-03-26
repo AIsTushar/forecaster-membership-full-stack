@@ -8,9 +8,12 @@ function Page() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await axios.get("http://localhost:5000/api/auth/me", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "https://forecaster-membership-full-stack.vercel.app/api/auth/me",
+        {
+          withCredentials: true,
+        }
+      );
       const data = response.data.user;
       setUser(data);
     };
