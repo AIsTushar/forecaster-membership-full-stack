@@ -17,6 +17,8 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 dotenv.config();
 
+app.get("/", (req, res) => res.send("Hello World!"));
+
 // Authentication APIs
 app.use("/api/auth", authRoutes);
 
