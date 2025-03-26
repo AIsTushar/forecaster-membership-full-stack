@@ -8,6 +8,8 @@ import checkoutRoutes from "../src/routes/checkout.route.js";
 import webhookRoutes from "../src/routes/webhook.route.js";
 
 const app = express();
+dotenv.config();
+
 // Webhook API
 app.use("/api/webhook", webhookRoutes);
 
@@ -27,12 +29,11 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // Allow credentials (cookies, headers, etc.)
+    credentials: true,
   })
 );
 
 app.use(cookieParser());
-dotenv.config();
 
 // Authentication APIs
 app.use("/api/auth", authRoutes);
